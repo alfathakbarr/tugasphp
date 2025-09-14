@@ -9,9 +9,16 @@ function konversiNilai($angka) {
 
 $nama = $_POST['nama'];
 $nim = $_POST['nim'];
-$mk = $_POST['mk'];
-$nilai = $_POST['nilai'];
-$nilaiHuruf = konversiNilai($nilai);
+$nilaiAngka = $_POST['nilai'];
+
+// daftar mata kuliah tetap
+$mataKuliah = [
+    "Pengembangan Web",
+    "Basis Data",
+    "Matematika Teknik",
+    "Sistem Operasi",
+    "Jaringan Komputer"
+];
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,22 +32,4 @@ $nilaiHuruf = konversiNilai($nilai);
         <a href="tambah.php">Tambah Mahasiswa</a>
     </nav>
 
-    <h2>Data Mahasiswa Tersimpan</h2>
-    <table>
-        <tr>
-            <th>Nama</th>
-            <th>NIM</th>
-            <th>Mata Kuliah</th>
-            <th>Nilai Angka</th>
-            <th>Nilai Huruf</th>
-        </tr>
-        <tr>
-            <td><?= $nama ?></td>
-            <td><?= $nim ?></td>
-            <td><?= $mk ?></td>
-            <td><?= $nilai ?></td>
-            <td><?= $nilaiHuruf ?></td>
-        </tr>
-    </table>
-</body>
-</html>
+    <h2>Data Mahasiswa T
