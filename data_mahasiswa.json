@@ -1,0 +1,54 @@
+[
+    {
+        "nama": "Suyatno",
+        "nim": "21060123140444",
+        "mk": [
+            {
+                "nama": "Pengembangan Web",
+                "nilai": 80
+            },
+            {
+                "nama": "Basis Data",
+                "nilai": 80
+            },
+            {
+                "nama": "Matematika Teknik",
+                "nilai": 80
+            },
+            {
+                "nama": "Sistem Operasi",
+                "nilai": 80
+            },
+            {
+                "nama": "Jaringan Komputer",
+                "nilai": 80
+            }
+        ]
+    },
+    {
+        "nama": "Heri",
+        "nim": "21060123140178",
+        "mk": [
+            {
+                "nama": "Pengembangan Web",
+                "nilai": 78
+            },
+            {
+                "nama": "Basis Data",
+                "nilai": 78
+            },
+            {
+                "nama": "Matematika Teknik",
+                "nilai": 78
+            },
+            {
+                "nama": "Sistem Operasi",
+                "nilai": 78
+            },
+            {
+                "nama": "Jaringan Komputer",
+                "nilai": 78
+            }
+        ]
+    }
+]

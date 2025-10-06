@@ -11,33 +11,51 @@
     </nav>
 
     <h2>Form Tambah Mahasiswa</h2>
-    <form method="POST" action="simpan.php">
-        <!-- Data Mahasiswa -->
-        <label>Nama:</label><br>
-        <input type="text" name="nama" required><br><br>
+    <div class="form-container">
+        <form method="POST" action="simpan.php">
+            <!-- Data Mahasiswa -->
+            <div class="form-group">
+                <label>Nama:</label>
+                <input type="text" name="nama" required placeholder="Masukkan nama lengkap">
+            </div>
 
-        <label>NIM:</label><br>
-        <input type="text" name="nim" required><br><br>
+            <div class="form-group">
+                <label>NIM:</label>
+                <input type="text" name="nim" required placeholder="Masukkan NIM">
+            </div>
 
-        <!-- Input Nilai untuk 5 Mata Kuliah -->
-        <h3>Nilai Mata Kuliah</h3>
+            <!-- Input Nilai untuk 5 Mata Kuliah -->
+            <div class="nilai-section">
+                <h3>Nilai Mata Kuliah</h3>
+                
+                <div class="form-group">
+                    <label>Pengembangan Web:</label>
+                    <input type="number" name="nilai[]" required min="0" max="100" placeholder="0-100">
+                </div>
 
-        <label>Pengembangan Web:</label><br>
-        <input type="number" name="nilai[]" required><br><br>
+                <div class="form-group">
+                    <label>Basis Data:</label>
+                    <input type="number" name="nilai[]" required min="0" max="100" placeholder="0-100">
+                </div>
 
-        <label>Basis Data:</label><br>
-        <input type="number" name="nilai[]" required><br><br>
+                <div class="form-group">
+                    <label>Matematika Teknik:</label>
+                    <input type="number" name="nilai[]" required min="0" max="100" placeholder="0-100">
+                </div>
 
-        <label>Matematika Teknik:</label><br>
-        <input type="number" name="nilai[]" required><br><br>
+                <div class="form-group">
+                    <label>Sistem Operasi:</label>
+                    <input type="number" name="nilai[]" required min="0" max="100" placeholder="0-100">
+                </div>
 
-        <label>Sistem Operasi:</label><br>
-        <input type="number" name="nilai[]" required><br><br>
+                <div class="form-group">
+                    <label>Jaringan Komputer:</label>
+                    <input type="number" name="nilai[]" required min="0" max="100" placeholder="0-100">
+                </div>
+            </div>
 
-        <label>Jaringan Komputer:</label><br>
-        <input type="number" name="nilai[]" required><br><br>
-
-        <input type="submit" value="Simpan">
-    </form>
+            <button type="submit" class="submit-btn">Simpan Data</button>
+        </form>
+    </div>
 </body>
 </html>

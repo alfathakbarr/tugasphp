@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 function konversiNilai($angka) {
     if ($angka >= 85) return "A";
     elseif ($angka >= 70) return "B";
@@ -7,63 +9,37 @@ function konversiNilai($angka) {
     else return "E";
 }
 
-$mahasiswa = [
-    [
-        "nama"=>"Alfath Akbar", 
-        "nim"=>"21060125140101", 
-        "mk"=>[
-            ["nama"=>"Pengembangan Web", "nilai"=>88],
-            ["nama"=>"Basis Data", "nilai"=>95],
-            ["nama"=>"Matematika Teknik", "nilai"=>87],
-            ["nama"=>"Sistem Operasi", "nilai"=>99],
-            ["nama"=>"Jaringan Komputer", "nilai"=>91],
-        ]
-    ],
-    [
-        "nama"=>"M Farhan Noufal", 
-        "nim"=>"21060125140205", 
-        "mk"=>[
-            ["nama"=>"Pengembangan Web", "nilai"=>92],
-            ["nama"=>"Basis Data", "nilai"=>80],
-            ["nama"=>"Matematika Teknik", "nilai"=>70],
-            ["nama"=>"Sistem Operasi", "nilai"=>65],
-            ["nama"=>"Jaringan Komputer", "nilai"=>50],
-        ]
-    ],
-    [
-        "nama"=>"Banar Pambudi", 
-        "nim"=>"21060125140307", 
-        "mk"=>[
-            ["nama"=>"Pengembangan Web", "nilai"=>60],
-            ["nama"=>"Basis Data", "nilai"=>58],
-            ["nama"=>"Matematika Teknik", "nilai"=>75],
-            ["nama"=>"Sistem Operasi", "nilai"=>85],
-            ["nama"=>"Jaringan Komputer", "nilai"=>90],
-        ]
-    ],
-    [
-        "nama"=>"Ivan Admaja", 
-        "nim"=>"21060125140409", 
-        "mk"=>[
-            ["nama"=>"Pengembangan Web", "nilai"=>55],
-            ["nama"=>"Basis Data", "nilai"=>65],
-            ["nama"=>"Matematika Teknik", "nilai"=>78],
-            ["nama"=>"Sistem Operasi", "nilai"=>72],
-            ["nama"=>"Jaringan Komputer", "nilai"=>80],
-        ]
-    ],
-    [
-        "nama"=>"Zain Zaidan", 
-        "nim"=>"21060125140511", 
-        "mk"=>[
-            ["nama"=>"Pengembangan Web", "nilai"=>45],
-            ["nama"=>"Basis Data", "nilai"=>55],
-            ["nama"=>"Matematika Teknik", "nilai"=>62],
-            ["nama"=>"Sistem Operasi", "nilai"=>70],
-            ["nama"=>"Jaringan Komputer", "nilai"=>88],
-        ]
-    ],
-];
+// Membaca data dari file JSON
+$jsonFile = "data_mahasiswa.json";
+if (file_exists($jsonFile)) {
+    $jsonContent = file_get_contents($jsonFile);
+    $mahasiswa = json_decode($jsonContent, true) ?: [];
+} else {
+    $mahasiswa = [];
+}
+
+// Menampilkan pesan berdasarkan status
+if (isset($_GET['status'])) {
+    $message = '';
+    $type = 'success';
+    
+    switch ($_GET['status']) {
+        case 'success':
+            $message = 'Data berhasil disimpan!';
+            break;
+        case 'updated':
+            $message = 'Data berhasil diperbarui!';
+            break;
+        case 'deleted':
+            $message = 'Data berhasil dihapus!';
+            $type = 'warning';
+            break;
+    }
+    
+    if ($message) {
+        echo "<div class='alert alert-{$type}'>{$message}</div>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -86,21 +62,45 @@ $mahasiswa = [
                 <th>Mata Kuliah</th>
                 <th>Nilai Angka</th>
                 <th>Nilai Huruf</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($mahasiswa as $mhs): ?>
-                <?php foreach ($mhs['mk'] as $matkul): ?>
+                <?php 
+                $firstRow = true;
+                $rowspan = count($mhs['mk']);
+                foreach ($mhs['mk'] as $matkul): 
+                ?>
                 <tr>
-                    <td><?= $mhs['nama'] ?></td>
-                    <td><?= $mhs['nim'] ?></td>
-                    <td><?= $matkul['nama'] ?></td>
-                    <td><?= $matkul['nilai'] ?></td>
+                    <?php if ($firstRow): ?>
+                        <td rowspan="<?= $rowspan ?>"><?= htmlspecialchars($mhs['nama']) ?></td>
+                        <td rowspan="<?= $rowspan ?>"><?= htmlspecialchars($mhs['nim']) ?></td>
+                    <?php endif; ?>
+                    <td><?= htmlspecialchars($matkul['nama']) ?></td>
+                    <td><?= htmlspecialchars($matkul['nilai']) ?></td>
                     <td><?= konversiNilai($matkul['nilai']) ?></td>
+                    <?php if ($firstRow): ?>
+                        <td rowspan="<?= $rowspan ?>" class="action-buttons">
+                            <a href="edit.php?nim=<?= urlencode($mhs['nim']) ?>" class="btn btn-edit">Edit</a>
+                            <a href="javascript:void(0);" onclick="confirmDelete('<?= htmlspecialchars($mhs['nim']) ?>')" class="btn btn-delete">Hapus</a>
+                        </td>
+                    <?php endif; ?>
                 </tr>
-                <?php endforeach; ?>
+                <?php 
+                $firstRow = false;
+                endforeach; 
+                ?>
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <script>
+    function confirmDelete(nim) {
+        if (confirm('Apakah Anda yakin ingin menghapus data mahasiswa ini?')) {
+            window.location.href = 'delete.php?nim=' + encodeURIComponent(nim);
+        }
+    }
+    </script>
 </body>
 </html>
